@@ -43,14 +43,14 @@ def compute_synflow_per_weight(net, inputs, targets, mode, split_data=1, loss_fn
 
     # keep signs of all params
     signs = linearize(net)
-    
-    # Compute gradients with input of 1s 
+
+    # Compute gradients with input of 1s
     net.zero_grad()
     net.double()
     input_dim = list(inputs[0,:].shape)
     inputs = torch.ones([1] + input_dim).double().to(device)
     output = net.forward(inputs)
-    torch.sum(output).backward() 
+    torch.sum(output).backward()
 
     # select the gradients that we want to use for search/prune
     def synflow(layer):
